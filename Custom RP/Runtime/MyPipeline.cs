@@ -13,5 +13,10 @@ namespace SRPStudy
                 renderer.Render(context, camera);
             }
         }
+
+        public MyPipeline()
+        {
+            GraphicsSettings.useScriptableRenderPipelineBatching = true;
+        }
     }
 }
