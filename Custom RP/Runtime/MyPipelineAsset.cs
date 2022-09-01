@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 //与之前相同的命名空间
@@ -7,10 +8,13 @@ namespace SRPStudy
     [CreateAssetMenu(menuName = "Rendering/MyPipeline")]
     public class MyPipelineAsset : RenderPipelineAsset
     {  
+        [SerializeField]
+        bool useDynamicBatching = true, useGPUInstancing = true, useSRPBatcher = true;
+
         protected override RenderPipeline CreatePipeline()
         {
             //返回上一个脚本自定义的管线
-            return new MyPipeline();
+            return new MyPipeline(useDynamicBatching, useGPUInstancing, useSRPBatcher);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace SRPStudy
         private CullingResults _cullingResults;
         private static ShaderTagId unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit");
 
-        public void Render(ScriptableRenderContext context, Camera camera)
+        public void Render(ScriptableRenderContext context, Camera camera, bool useDynamicBatching, bool useGPUInstancing)
         {
             this._camera = camera;
             this._context = context;
@@ -24,19 +24,24 @@ namespace SRPStudy
             PrepareForSceneWindow();
             if (!Cull()) return;
             Setup();
-            DrawVisibleGeomerty();
+            DrawVisibleGeomerty(useDynamicBatching, useDynamicBatching);
             DrawUnsupportedShaders();
             DrawGizmos(); //绘制相机视椎
             Submit();
         }
 
-        void DrawVisibleGeomerty()
+        void DrawVisibleGeomerty(bool useDynamicBatching, bool useGPUInstancing)
         {
             //通过排序后的相机的正交排序或者距离的排序来平判断是否渲染
             var sortingSettings = new SortingSettings(_camera) {
                 criteria = SortingCriteria.CommonOpaque
             };
-            var drawingSettings = new DrawingSettings(unlitShaderTagId, sortingSettings);
+            var drawingSettings = new DrawingSettings(unlitShaderTagId, sortingSettings)
+            {
+                // 关闭GPU Instancing， 开启动态合批
+                enableInstancing = useGPUInstancing,
+                enableDynamicBatching = useDynamicBatching
+            };
             //将渲染队列中的所有对象设置为过滤的对象
             var filteringSettings = new FilteringSettings(RenderQueueRange.opaque);
             _context.DrawRenderers(_cullingResults, ref drawingSettings, ref filteringSettings);
