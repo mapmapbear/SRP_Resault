@@ -20,6 +20,7 @@ namespace SRPStudy
             this.useDynamicBatching = useDynamicBatching;
             this.useGPUInstancing = useDynamicBatching;
             GraphicsSettings.useScriptableRenderPipelineBatching = useSRPBatcher;
+            GraphicsSettings.lightsUseLinearIntensity = true;
         }
     }
 }

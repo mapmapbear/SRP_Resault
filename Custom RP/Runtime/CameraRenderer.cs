@@ -14,8 +14,9 @@ namespace SRPStudy
             name = bufferName
         };
         private CullingResults _cullingResults;
-        private static ShaderTagId unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit");
 
+        private static ShaderTagId unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit"), litShaderTagId = new ShaderTagId("CustomLit");
+        private Lighting _lighting = new Lighting();
         public void Render(ScriptableRenderContext context, Camera camera, bool useDynamicBatching, bool useGPUInstancing)
         {
             this._camera = camera;
@@ -24,6 +25,7 @@ namespace SRPStudy
             PrepareForSceneWindow();
             if (!Cull()) return;
             Setup();
+            _lighting.Setup(context, _cullingResults);
             DrawVisibleGeomerty(useDynamicBatching, useDynamicBatching);
             DrawUnsupportedShaders();
             DrawGizmos(); //绘制相机视椎
@@ -42,6 +44,7 @@ namespace SRPStudy
                 enableInstancing = useGPUInstancing,
                 enableDynamicBatching = useDynamicBatching
             };
+            drawingSettings.SetShaderPassName(1, litShaderTagId);
             //将渲染队列中的所有对象设置为过滤的对象
             var filteringSettings = new FilteringSettings(RenderQueueRange.opaque);
             _context.DrawRenderers(_cullingResults, ref drawingSettings, ref filteringSettings);
