@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Custom_RP.Runtime;
+using UnityEngine;
 using UnityEngine.Rendering;
 
 [CreateAssetMenu(menuName = "Rendering/Custom Render Pipeline")]
@@ -14,10 +15,13 @@ public class CustomRenderPipelineAsset : RenderPipelineAsset {
 	[SerializeField]
 	ShadowSettings shadows = default;
 
+	[SerializeField]
+	PostFXSettings postFXSettings = default;
+
 	protected override RenderPipeline CreatePipeline () {
 		return new CustomRenderPipeline(
 			useDynamicBatching, useGPUInstancing, useSRPBatcher,
-			useLightsPerObject, shadows
+			useLightsPerObject, shadows, postFXSettings
 		);
 	}
 }

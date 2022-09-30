@@ -4,8 +4,12 @@ using UnityEngine.Profiling;
 using UnityEngine.Rendering;
 
 partial class CameraRenderer {
+	// Old
+	//partial void DrawGizmos ();
+	// Now
+	partial void DrawGizmosBeforeFX ();
 
-	partial void DrawGizmos ();
+	partial void DrawGizmosAfterFX ();
 
 	partial void DrawUnsupportedShaders ();
 
@@ -28,9 +32,14 @@ partial class CameraRenderer {
 
 	string SampleName { get; set; }
 
-	partial void DrawGizmos () {
+	partial void DrawGizmosBeforeFX  () {
 		if (Handles.ShouldRenderGizmos()) {
 			context.DrawGizmos(camera, GizmoSubset.PreImageEffects);
+		}
+	}
+
+	partial void DrawGizmosAfterFX () {
+		if (Handles.ShouldRenderGizmos()) {
 			context.DrawGizmos(camera, GizmoSubset.PostImageEffects);
 		}
 	}

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Custom_RP.Runtime;
+using UnityEngine;
 using UnityEngine.Rendering;
 
 public partial class CustomRenderPipeline : RenderPipeline {
@@ -8,15 +9,17 @@ public partial class CustomRenderPipeline : RenderPipeline {
 	bool useDynamicBatching, useGPUInstancing, useLightsPerObject;
 
 	ShadowSettings shadowSettings;
+	PostFXSettings postFXSettings;
 
 	public CustomRenderPipeline (
 		bool useDynamicBatching, bool useGPUInstancing, bool useSRPBatcher,
-		bool useLightsPerObject, ShadowSettings shadowSettings
+		bool useLightsPerObject, ShadowSettings shadowSettings, PostFXSettings postFXSettings
 	) {
 		this.shadowSettings = shadowSettings;
 		this.useDynamicBatching = useDynamicBatching;
 		this.useGPUInstancing = useGPUInstancing;
 		this.useLightsPerObject = useLightsPerObject;
+		this.postFXSettings = postFXSettings;
 		GraphicsSettings.useScriptableRenderPipelineBatching = useSRPBatcher;
 		GraphicsSettings.lightsUseLinearIntensity = true;
 		InitializeForEditor();
@@ -29,7 +32,7 @@ public partial class CustomRenderPipeline : RenderPipeline {
 			renderer.Render(
 				context, camera,
 				useDynamicBatching, useGPUInstancing, useLightsPerObject,
-				shadowSettings
+				shadowSettings, postFXSettings
 			);
 		}
 	}
