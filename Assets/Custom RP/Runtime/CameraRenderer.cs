@@ -1,5 +1,4 @@
-﻿using Custom_RP.Runtime;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering;
 
 public partial class CameraRenderer {
@@ -81,6 +80,10 @@ public partial class CameraRenderer {
 		context.SetupCameraProperties(camera);
 		CameraClearFlags flags = camera.clearFlags;
 		if (postFXStack.IsActive) {
+			if (flags > CameraClearFlags.Color)
+			{
+				flags = CameraClearFlags.Color;
+			}
 			buffer.GetTemporaryRT(
 				frameBufferId, camera.pixelWidth, camera.pixelHeight,
 				32, FilterMode.Bilinear, RenderTextureFormat.Default
@@ -106,6 +109,8 @@ public partial class CameraRenderer {
 			buffer.ReleaseTemporaryRT(frameBufferId);
 		}
 	}
+	
+	
 
 	void Submit () {
 		buffer.EndSample(SampleName);

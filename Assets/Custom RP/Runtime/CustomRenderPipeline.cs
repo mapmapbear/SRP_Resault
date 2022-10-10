@@ -1,5 +1,4 @@
-﻿using Custom_RP.Runtime;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering;
 
 public partial class CustomRenderPipeline : RenderPipeline {
