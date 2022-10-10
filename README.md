@@ -5,4 +5,5 @@
 - 2022-9-02 => 完成session 2 DrawCall => 所有内容
 - 2022-9-06 => 完成session 3 Direction Light => 所有内容
 - 短暂断更（07 ~ 30）
-- 202209-30 => 完成session 10 Point and Spot Lights Shadow 之前所有内容
+- 2022-9-30 => 完成session 10 Point and Spot Lights Shadow 之前所有内容
+- 2022-10-10 => 完成Session 11 PostProcess => 所有内容
