@@ -22,10 +22,12 @@ public partial class CameraRenderer {
 
 	Lighting lighting = new Lighting();
 	PostFXStack postFXStack = new PostFXStack();
+	private bool useHDR;
+	private int colorLUTResolution;
 	public void Render (
-		ScriptableRenderContext context, Camera camera,
+		ScriptableRenderContext context, Camera camera, bool allowHDR,
 		bool useDynamicBatching, bool useGPUInstancing, bool useLightsPerObject,
-		ShadowSettings shadowSettings, PostFXSettings postFXSettings
+		ShadowSettings shadowSettings, PostFXSettings postFXSettings, int colorLUTResolution
 	) {
 		this.context = context;
 		this.camera = camera;
@@ -35,13 +37,13 @@ public partial class CameraRenderer {
 		if (!Cull(shadowSettings.maxDistance)) {
 			return;
 		}
-		
+		useHDR = allowHDR && camera.allowHDR;
 		buffer.BeginSample(SampleName);
 		ExecuteBuffer();
 		lighting.Setup(
 			context, cullingResults, shadowSettings, useLightsPerObject
 		);
-		postFXStack.Setup(context, camera, postFXSettings);
+		postFXStack.Setup(context, camera, postFXSettings, useHDR, colorLUTResolution);
 		buffer.EndSample(SampleName);
 		Setup();
 		DrawVisibleGeometry(
@@ -86,7 +88,8 @@ public partial class CameraRenderer {
 			}
 			buffer.GetTemporaryRT(
 				frameBufferId, camera.pixelWidth, camera.pixelHeight,
-				32, FilterMode.Bilinear, RenderTextureFormat.Default
+				32, FilterMode.Bilinear, useHDR ?
+					RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default
 			);
 			buffer.SetRenderTarget(
 				frameBufferId,
@@ -117,7 +120,7 @@ public partial class CameraRenderer {
 		ExecuteBuffer();
 		context.Submit();
 	}
-
+ 
 	void ExecuteBuffer () {
 		context.ExecuteCommandBuffer(buffer);
 		buffer.Clear();

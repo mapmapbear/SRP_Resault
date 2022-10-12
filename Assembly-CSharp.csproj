@@ -41,19 +41,19 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Custom RP\Runtime\CustomRenderPipelineAsset.cs" />
-     <Compile Include="Assets\Custom RP\Runtime\ShadowSettings.cs" />
      <Compile Include="Assets\Custom RP\Runtime\CustomRenderPipeline.cs" />
      <Compile Include="Assets\Custom RP\Runtime\CustomRenderPipeline.Editor.cs" />
+     <Compile Include="Assets\Custom RP\Runtime\CustomRenderPipelineAsset.cs" />
      <Compile Include="Assets\Custom RP\Runtime\Shadows.cs" />
+     <Compile Include="Assets\Custom RP\Runtime\PostFXStack.Editor.cs" />
      <Compile Include="Assets\Custom RP\Runtime\PostFXStack.cs" />
      <Compile Include="Assets\Custom RP\Examples\MeshBall.cs" />
      <Compile Include="Assets\Custom RP\Runtime\PostFXSettings.cs" />
      <Compile Include="Assets\Custom RP\Runtime\CameraRenderer.cs" />
      <Compile Include="Assets\Custom RP\Runtime\Lighting.cs" />
      <Compile Include="Assets\Custom RP\Examples\PerObjectMaterialProperties.cs" />
+     <Compile Include="Assets\Custom RP\Runtime\ShadowSettings.cs" />
      <Compile Include="Assets\Custom RP\Runtime\CameraRenderer.Editor.cs" />
-     <Compile Include="Assets\Custom RP\Runtime\PostFXStack.Editor.cs" />
      <None Include="Assets\Custom RP\Shaders\PostFXStackPasses.hlsl" />
      <None Include="Assets\Custom RP\ShaderLibrary\Surface.hlsl" />
      <None Include="Assets\Custom RP\Shaders\UnlitInput.hlsl" />
